@@ -1,38 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Angaar Studio</title>
-    <style>
-      body {
-        margin: 0;
-        background-color: black;
-        overflow: hidden;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Angaar 3D Test</title>
+  <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.98/build/spline-viewer.js"></script>
+  <style>
+    body {
+      margin: 0;
+      background-color: black;
+    }
+    spline-viewer {
+      width: 100vw;
+      height: 100vh;
+    }
+  </style>
+</head>
+<body>
+  <spline-viewer url="https://prod.spline.design/N6swOzEKfDOvz3kj/scene.splinecode"></spline-viewer>
 
-      spline-viewer {
-        width: 100vw;
-        height: 100vh;
-        display: block;
-      }
-    </style>
-    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.98/build/spline-viewer.js"></script>
-  </head>
-  <body>
-    <spline-viewer url="https://prod.spline.design/N6swOzEKfDOvz3kj/scene.splinecode"></spline-viewer>
+  <script>
+    window.addEventListener("load", () => {
+      const checkLogo = () => {
+        const viewer = document.querySelector('spline-viewer');
+        if (!viewer || !viewer.shadowRoot) {
+          requestAnimationFrame(checkLogo);
+          return;
+        }
 
-    <script>
-      window.onload = function () {
-        const interval = setInterval(() => {
-          const viewer = document.querySelector('spline-viewer');
-          const shadow = viewer?.shadowRoot;
-          const logo = shadow?.querySelector('#logo');
-          if (logo) {
-            logo.remove();
-            clearInterval(interval);
-          }
-        }, 500); // retry every 500ms until logo appears
+        const logo = viewer.shadowRoot.querySelector('#logo');
+        if (logo) {
+          logo.remove();
+        } else {
+          requestAnimationFrame(checkLogo);
+        }
       };
-    </script>
-  </body>
+      checkLogo();
+    });
+  </script>
+</body>
 </html>
