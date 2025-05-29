@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Angaar 3D Test</title>
+  <title>Angaar Studio</title>
   <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.98/build/spline-viewer.js"></script>
   <style>
     body {
@@ -20,23 +20,23 @@
   <spline-viewer url="https://prod.spline.design/N6swOzEKfDOvz3kj/scene.splinecode"></spline-viewer>
 
   <script>
-    window.addEventListener("load", () => {
-      const checkLogo = () => {
-        const viewer = document.querySelector('spline-viewer');
-        if (!viewer || !viewer.shadowRoot) {
-          requestAnimationFrame(checkLogo);
-          return;
-        }
+    function removeWatermark() {
+      const viewer = document.querySelector('spline-viewer');
+      if (!viewer || !viewer.shadowRoot) {
+        setTimeout(removeWatermark, 100);
+        return;
+      }
 
-        const logo = viewer.shadowRoot.querySelector('#logo');
-        if (logo) {
-          logo.remove();
-        } else {
-          requestAnimationFrame(checkLogo);
-        }
-      };
-      checkLogo();
-    });
+      const logo = viewer.shadowRoot.querySelector('#logo');
+      if (logo) {
+        logo.remove();
+        console.log("✅ Watermark removed");
+      } else {
+        setTimeout(removeWatermark, 100);
+      }
+    }
+
+    window.addEventListener('load', removeWatermark);
   </script>
 </body>
 </html>
