@@ -2,37 +2,36 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Angaar Spline Test</title>
+    <title>Angaar Studio</title>
     <style>
-      body, html {
+      body {
         margin: 0;
-        height: 100%;
-        background: #000;
+        background-color: black;
+        overflow: hidden;
       }
+
       spline-viewer {
         width: 100vw;
         height: 100vh;
         display: block;
       }
     </style>
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.98/build/spline-viewer.js"></script>
   </head>
   <body>
-    <script src="https://unpkg.com/@splinetool/viewer/build/spline-viewer.js"></script>
-
     <spline-viewer url="https://prod.spline.design/N6swOzEKfDOvz3kj/scene.splinecode"></spline-viewer>
 
     <script>
       window.onload = function () {
         const interval = setInterval(() => {
           const viewer = document.querySelector('spline-viewer');
-          if (viewer && viewer.shadowRoot) {
-            const logo = viewer.shadowRoot.querySelector('#logo');
-            if (logo) {
-              logo.remove();
-              clearInterval(interval);
-            }
+          const shadow = viewer?.shadowRoot;
+          const logo = shadow?.querySelector('#logo');
+          if (logo) {
+            logo.remove();
+            clearInterval(interval);
           }
-        }, 100);
+        }, 500); // retry every 500ms until logo appears
       };
     </script>
   </body>
